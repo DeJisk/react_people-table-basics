@@ -23,16 +23,13 @@ export const PersonLink: React.FC<Props> = ({ person, people }) => {
   const hasMotherInList = allNames.includes(person.motherName || '');
   const hasFatherInList = allNames.includes(person.fatherName || '');
 
-  let mother = null;
-  let father = null;
+  const mother = hasMotherInList
+    ? people.find(human => human.name === person.motherName)
+    : null;
 
-  if (hasMotherInList) {
-    mother = people.find(human => human.name === person.motherName);
-  }
-
-  if (hasFatherInList) {
-    father = people.find(human => human.name === person.fatherName);
-  }
+  const father = hasFatherInList
+    ? people.find(human => human.name === person.fatherName)
+    : null;
 
   return (
     <tr
@@ -53,27 +50,36 @@ export const PersonLink: React.FC<Props> = ({ person, people }) => {
       <td>{person.sex}</td>
       <td>{person.born}</td>
       <td>{person.died}</td>
-      {hasMotherInList ? (
-        <td>
-          <Link
-            className="has-text-danger"
-            to={`/people/${getParams(person.motherName, mother?.born)}`}
-          >
-            {person.motherName}
-          </Link>
-        </td>
-      ) : (
-        <td>{person.motherName || '-'}</td>
-      )}
-      {hasFatherInList ? (
-        <td>
-          <Link to={`/people/${getParams(person.fatherName, father?.born)}`}>
-            {person.fatherName}
-          </Link>
-        </td>
-      ) : (
-        <td>{person.fatherName || '-'}</td>
-      )}
+      <td>
+        {hasMotherInList && mother ? (
+          getParams(person.motherName, mother.born) ? (
+            <Link
+              className="has-text-danger"
+              to={`/people/${getParams(person.motherName, mother.born)}`}
+            >
+              {person.motherName}
+            </Link>
+          ) : (
+            person.motherName
+          )
+        ) : (
+          person.motherName || '-'
+        )}
+      </td>
+
+      <td>
+        {hasFatherInList && father ? (
+          getParams(person.fatherName, father.born) ? (
+            <Link to={`/people/${getParams(person.fatherName, father.born)}`}>
+              {person.fatherName}
+            </Link>
+          ) : (
+            person.fatherName
+          )
+        ) : (
+          person.fatherName || '-'
+        )}
+      </td>
     </tr>
   );
 };

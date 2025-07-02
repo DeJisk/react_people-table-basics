@@ -56,8 +56,12 @@ export const People = () => {
               <tbody>
                 {people &&
                   people.length > 0 &&
-                  people.map((person, index) => (
-                    <PersonLink key={index} person={person} people={people} />
+                  people.map(person => (
+                    <PersonLink
+                      key={person.name}
+                      person={person}
+                      people={people}
+                    />
                   ))}
               </tbody>
             </table>
