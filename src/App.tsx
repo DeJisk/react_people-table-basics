@@ -2,6 +2,8 @@ import { Routes, Route, NavLink, Navigate } from 'react-router-dom';
 import './App.scss';
 import classNames from 'classnames';
 import { People } from './components/People/People';
+import { Home } from './components/Home/Home';
+import { NotFoundPage } from './components/NotFoundPage/NotFoundPage';
 
 export const App = () => (
   <div data-cy="app">
@@ -41,10 +43,10 @@ export const App = () => (
     <main className="section">
       <div className="container">
         <Routes>
-          <Route path="/" element={<h1 className="title">Home Page</h1>} />
+          <Route path="/" element={<Home />} />
           <Route path="people/:personName?" element={<People />} />
           <Route path="home" element={<Navigate to="/" />} />
-          <Route path="*" element={<h1 className="title">Page not found</h1>} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </main>

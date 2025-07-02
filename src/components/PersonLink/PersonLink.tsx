@@ -12,6 +12,8 @@ function getParams(personName: string | null, personBorn: number | undefined) {
   if (personName && personBorn) {
     return `${personName.toLocaleLowerCase().split(' ').join('-')}-${personBorn}`;
   }
+
+  return '';
 }
 
 export const PersonLink: React.FC<Props> = ({ person, people }) => {
@@ -52,16 +54,12 @@ export const PersonLink: React.FC<Props> = ({ person, people }) => {
       <td>{person.died}</td>
       <td>
         {hasMotherInList && mother ? (
-          getParams(person.motherName, mother.born) ? (
-            <Link
-              className="has-text-danger"
-              to={`/people/${getParams(person.motherName, mother.born)}`}
-            >
-              {person.motherName}
-            </Link>
-          ) : (
-            person.motherName
-          )
+          <Link
+            className="has-text-danger"
+            to={`/people/${getParams(person.motherName, mother.born)}`}
+          >
+            {person.motherName}
+          </Link>
         ) : (
           person.motherName || '-'
         )}
@@ -69,13 +67,9 @@ export const PersonLink: React.FC<Props> = ({ person, people }) => {
 
       <td>
         {hasFatherInList && father ? (
-          getParams(person.fatherName, father.born) ? (
-            <Link to={`/people/${getParams(person.fatherName, father.born)}`}>
-              {person.fatherName}
-            </Link>
-          ) : (
-            person.fatherName
-          )
+          <Link to={`/people/${getParams(person.fatherName, father.born)}`}>
+            {person.fatherName}
+          </Link>
         ) : (
           person.fatherName || '-'
         )}
